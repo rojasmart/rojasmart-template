@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FaLinkedin, FaGithub, FaBehance } from "react-icons/fa"; // Import icons
 
 export default function Home() {
   return (
@@ -43,21 +44,28 @@ export default function Home() {
       {/* Simple Contact */}
       <section id="contact" className="bg-slate-50">
         <div className="w-full px-6 py-16">
-          <h2 className="text-3xl font-bold text-black mb-4">Let's Work Together</h2>
-          <p className="text-black mb-8">Ready to start your project? Get in touch with us.</p>
-          <Link
-            href="mailto:hello@rojasmart.dev"
-            className="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            Contact Us
+          <h2 className="text-3xl font-bold text-black mb-4">Wanna get in touch?</h2>
+          <p className="text-black mb-8">I am always available for exciting discussions and ideas.</p>
+          <Link href="mailto:hello@rojasmart.dev" className="text-black hover:text-slate-600">
+            rogeriosvaldo@gmail.com
           </Link>
         </div>
       </section>
 
       {/* Simple Footer */}
       <footer className="border-t border-slate-200">
-        <div className="w-full px-6 py-8">
-          <p className="text-black">© 2025 rojasmart.dev. All rights reserved.</p>
+        <div className="w-full px-6 py-8 flex flex-col items-left">
+          <div className="flex space-x-6">
+            <a href="https://www.linkedin.com/in/your-profile" target="_blank" rel="noopener noreferrer" className="text-black hover:text-blue-600">
+              <FaLinkedin size={24} />
+            </a>
+            <a href="https://github.com/your-profile" target="_blank" rel="noopener noreferrer" className="text-black hover:text-gray-800">
+              <FaGithub size={24} />
+            </a>
+            <a href="https://www.behance.net/your-profile" target="_blank" rel="noopener noreferrer" className="text-black hover:text-blue-500">
+              <FaBehance size={24} />
+            </a>
+          </div>
         </div>
       </footer>
     </div>
