@@ -12,8 +12,8 @@ export default function Home() {
               <Link href="#about" className="text-black hover:text-slate-600">
                 About
               </Link>
-              <Link href="#services" className="text-black hover:text-slate-600">
-                Services
+              <Link href="#projects" className="text-black hover:text-slate-600">
+                Projects
               </Link>
               <Link href="#contact" className="text-black hover:text-slate-600">
                 Contact
@@ -62,9 +62,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Simple Services */}
-      <section id="services" className="w-full px-6 py-16">
-        <h2 className="text-3xl font-bold text-black mb-8">Services</h2>
+      {/* Simple Projects */}
+      <section id="projects" className="w-full px-6 py-16">
+        <h2 className="text-3xl font-bold text-black mb-8">Projects</h2>
         <div className="grid md:grid-cols-2 gap-8">
           <div className="p-6 border border-slate-200 rounded-lg">
             <h3 className="text-xl font-semibold text-black mb-3">Web Development</h3>
