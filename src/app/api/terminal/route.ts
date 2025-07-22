@@ -126,14 +126,102 @@ rojasmart@dev:$ `;
             return;
           }
 
+          // Handle whoami command
+          if (data.trim() === 'whoami') {
+            const whoamiOutput = `
+╔══════════════════════════════════════════════════════════════════╗
+║                         ROJASMART IDENTITY                       ║
+╠══════════════════════════════════════════════════════════════════╣
+║                                                                  ║
+║    ██████╗  ██████╗      ██╗ █████╗ ███████╗███╗   ███╗ █████╗   ║
+║    ██╔══██╗██╔═══██╗     ██║██╔══██╗██╔════╝████╗ ████║██╔══██╗  ║
+║    ██████╔╝██║   ██║     ██║███████║███████╗██╔████╔██║███████║  ║
+║    ██╔══██╗██║   ██║██   ██║██╔══██║╚════██║██║╚██╔╝██║██╔══██║  ║
+║    ██║  ██║╚██████╔╝╚█████╔╝██║  ██║███████║██║ ╚═╝ ██║██║  ██║  ║
+║    ╚═╝  ╚═╝ ╚═════╝  ╚════╝ ╚═╝  ╚═╝╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝  ║
+║                                                                  ║
+║                    Full-stack Developer & Designer               ║
+║                 Specialized in modern web technologies           ║
+║                Building user-centered digital products           ║
+║                                                                  ║
+║    ⚡ Creating innovative solutions that bridge design & code     ║
+║    🎨 Turning complex ideas into beautiful, functional products  ║
+║    🚀 Passionate about user experience and clean architecture    ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+rojasmart@dev:$ `;
+            
+            ws.send(JSON.stringify({
+              type: 'output',
+              data: whoamiOutput,
+            }));
+            return;
+          }
+
+          // Handle projects command
+          if (data.trim() === 'projects') {
+            const projectsOutput = `
+╔══════════════════════════════════════════════════════════════════════════════════════╗
+║                                 GITHUB PROJECTS                                      ║
+╠══════════════════════════════════════════════════════════════════════════════════════╣
+║                                                                                      ║
+║  🚀 Featured Repositories:                                                           ║
+║                                                                                      ║
+║  📁 rojasmart.dev                                                                    ║
+║     ├── Terminal-style portfolio website built with Next.js & TypeScript            ║
+║     ├── Real-time WebSocket terminal integration                                     ║
+║     └── 🔗 https://github.com/rojasmart/rojasmart.dev                               ║
+║                                                                                      ║
+║  📁 next-dashboard                                                                   ║
+║     ├── Modern admin dashboard with Next.js 14 App Router                           ║
+║     ├── TailwindCSS, Prisma, PostgreSQL integration                                 ║
+║     └── 🔗 https://github.com/rojasmart/next-dashboard                              ║
+║                                                                                      ║
+║  📁 ecommerce-platform                                                              ║
+║     ├── Full-stack e-commerce solution with React & Node.js                        ║
+║     ├── Stripe integration, JWT auth, MongoDB                                       ║
+║     └── 🔗 https://github.com/rojasmart/ecommerce-platform                         ║
+║                                                                                      ║
+║  📁 design-system                                                                   ║
+║     ├── Reusable React component library with Storybook                            ║
+║     ├── TypeScript, CSS-in-JS, automated testing                                    ║
+║     └── 🔗 https://github.com/rojasmart/design-system                              ║
+║                                                                                      ║
+║  📁 wordpress-themes                                                                ║
+║     ├── Collection of custom WordPress themes & plugins                            ║
+║     ├── Modern PHP, Gutenberg blocks, REST API                                      ║
+║     └── 🔗 https://github.com/rojasmart/wordpress-themes                           ║
+║                                                                                      ║
+║  📁 python-automation                                                               ║
+║     ├── Web scraping and automation scripts                                         ║
+║     ├── Beautiful Soup, Selenium, pandas integration                               ║
+║     └── 🔗 https://github.com/rojasmart/python-automation                          ║
+║                                                                                      ║
+║  🌟 Total Public Repositories: 25+                                                  ║
+║  📊 Languages: TypeScript, JavaScript, Python, PHP, CSS                            ║
+║  🔧 Main Profile: https://github.com/rojasmart                                      ║
+║                                                                                      ║
+║  💡 Want to collaborate? Fork any repo and submit a PR!                            ║
+║                                                                                      ║
+╚══════════════════════════════════════════════════════════════════════════════════════╝
+rojasmart@dev:$ `;
+            
+            ws.send(JSON.stringify({
+              type: 'output',
+              data: projectsOutput,
+            }));
+            return;
+          }
+
           // Handle help command
           if (data.trim() === 'help') {
             const helpOutput = `
 Available commands:
   profile    - Show detailed skills and expertise table
+  whoami     - Show developer identity and specialization
+  projects   - Display GitHub repositories and project links
   ls         - List directory contents
   pwd        - Show current directory
-  whoami     - Show current user
   clear      - Clear terminal screen
   node -v    - Show Node.js version
   npm -v     - Show npm version
