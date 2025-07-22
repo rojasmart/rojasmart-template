@@ -1,0 +1,9 @@
+Available commands:
+  profile    - Show detailed skills and expertise table
+  whoami     - Show developer identity and specialization
+  projects   - Display GitHub repositories and project links
+  clear      - Clear terminal screen
+  help       - Show this help message
+  
+System commands are restricted for security reasons.
+This is a demo terminal focused on portfolio content.

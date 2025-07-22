@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { WebSocketServer } from 'ws';
 import { spawn, ChildProcess } from 'child_process';
 import * as http from 'http';
+import { CommandHandler } from '../../data/commands/commandHandler';
 
 // Global variables to store WebSocket server
 let wss: WebSocketServer | null = null;
@@ -115,7 +116,7 @@ rojasmart@dev:$ `,
             return;
           }
 
-          // Special handling for allowed commands
+          // Handle clear command
           if (data.trim() === 'clear') {
             ws.send(JSON.stringify({
               type: 'clear',
@@ -128,142 +129,12 @@ rojasmart@dev:$ `,
             return;
           }
 
-          // Handle profile command
-          if (data.trim() === 'profile') {
-            const profileOutput = `
-╔══════════════════════════════════════════════════════════════════════════════════════╗
-║                                  ROJASMART PROFILE                                   ║
-╠══════════════════════════════════════════════════════════════════════════════════════╣
-║ DEVELOPMENT          │ DESIGN               │ ADMIN/DEVOPS        │ CMS PLATFORMS    ║
-╠══════════════════════════════════════════════════════════════════════════════════════╣
-║ • React/Next.js      │ • UI/UX Design       │ • Linux Server       │ • WordPress      ║
-║ • TypeScript         │ • Figma/Adobe XD     │ • Docker             │ • Drupal         ║
-║ • Node.js            │ • Responsive Design  │ • AWS/Cloud          │ • Strapi         ║
-║ • Python             │ • Design Systems     │ • CI/CD Pipelines    │ • Contentful     ║
-║ • JavaScript (ES6+)  │ • Prototyping        │ • Database Admin     │ • Sanity         ║
-║ • HTML5/CSS3         │ • Brand Identity     │ • Nginx/Apache       │ • Ghost          ║
-║ • Tailwind CSS       │ • Web Animation      │ • Git/Version Ctrl   │ • Netlify CMS    ║
-║ • APIs/REST          │ • Mobile Design      │ • Server Security    │ • Forestry       ║
-╚══════════════════════════════════════════════════════════════════════════════════════╝
-
-📧 Contact: rogeriosvaldo@gmail.com
-🌐 Location: Available for remote work worldwide
-💼 Status: Open for freelance projects and collaborations
-
-Type 'help' to see available commands
-rojasmart@dev:$ `;
-            
+          // Try to execute command through handler
+          const output = CommandHandler.executeCommand(data.trim());
+          if (output) {
             ws.send(JSON.stringify({
               type: 'output',
-              data: profileOutput,
-            }));
-            return;
-          }
-
-          // Handle whoami command
-          if (data.trim() === 'whoami') {
-            const whoamiOutput = `
-╔══════════════════════════════════════════════════════════════════╗
-║                         ROJASMART IDENTITY                       ║
-╠══════════════════════════════════════════════════════════════════╣
-║                                                                  ║
-║    ██████╗  ██████╗      ██╗ █████╗ ███████╗███╗   ███╗ █████╗   ║
-║    ██╔══██╗██╔═══██╗     ██║██╔══██╗██╔════╝████╗ ████║██╔══██╗  ║
-║    ██████╔╝██║   ██║     ██║███████║███████╗██╔████╔██║███████║  ║
-║    ██╔══██╗██║   ██║██   ██║██╔══██║╚════██║██║╚██╔╝██║██╔══██║  ║
-║    ██║  ██║╚██████╔╝╚█████╔╝██║  ██║███████║██║ ╚═╝ ██║██║  ██║  ║
-║    ╚═╝  ╚═╝ ╚═════╝  ╚════╝ ╚═╝  ╚═╝╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝  ║
-║                                                                  ║
-║                    Full-stack Developer & Designer               ║
-║                 Specialized in modern web technologies           ║
-║                Building user-centered digital products           ║
-║                                                                  ║
-║    ⚡ Creating innovative solutions that bridge design & code     ║
-║    🎨 Turning complex ideas into beautiful, functional products  ║
-║    🚀 Passionate about user experience and clean architecture    ║
-║                                                                  ║
-╚══════════════════════════════════════════════════════════════════╝
-rojasmart@dev:$ `;
-            
-            ws.send(JSON.stringify({
-              type: 'output',
-              data: whoamiOutput,
-            }));
-            return;
-          }
-
-          // Handle projects command
-          if (data.trim() === 'projects') {
-            const projectsOutput = `
-╔══════════════════════════════════════════════════════════════════════════════════════╗
-║                                 GITHUB PROJECTS                                      ║
-╠══════════════════════════════════════════════════════════════════════════════════════╣
-║                                                                                      ║
-║  🚀 Featured Repositories:                                                           ║
-║                                                                                      ║
-║  📁 rojasmart.dev                                                                    ║
-║     ├── Terminal-style portfolio website built with Next.js & TypeScript            ║
-║     ├── Real-time WebSocket terminal integration                                     ║
-║     └── 🔗 https://github.com/rojasmart/rojasmart.dev                               ║
-║                                                                                      ║
-║  📁 next-dashboard                                                                   ║
-║     ├── Modern admin dashboard with Next.js 14 App Router                           ║
-║     ├── TailwindCSS, Prisma, PostgreSQL integration                                 ║
-║     └── 🔗 https://github.com/rojasmart/next-dashboard                              ║
-║                                                                                      ║
-║  📁 ecommerce-platform                                                              ║
-║     ├── Full-stack e-commerce solution with React & Node.js                        ║
-║     ├── Stripe integration, JWT auth, MongoDB                                       ║
-║     └── 🔗 https://github.com/rojasmart/ecommerce-platform                         ║
-║                                                                                      ║
-║  📁 design-system                                                                   ║
-║     ├── Reusable React component library with Storybook                            ║
-║     ├── TypeScript, CSS-in-JS, automated testing                                    ║
-║     └── 🔗 https://github.com/rojasmart/design-system                              ║
-║                                                                                      ║
-║  📁 wordpress-themes                                                                ║
-║     ├── Collection of custom WordPress themes & plugins                            ║
-║     ├── Modern PHP, Gutenberg blocks, REST API                                      ║
-║     └── 🔗 https://github.com/rojasmart/wordpress-themes                           ║
-║                                                                                      ║
-║  📁 python-automation                                                               ║
-║     ├── Web scraping and automation scripts                                         ║
-║     ├── Beautiful Soup, Selenium, pandas integration                               ║
-║     └── 🔗 https://github.com/rojasmart/python-automation                          ║
-║                                                                                      ║
-║  🌟 Total Public Repositories: 25+                                                  ║
-║  📊 Languages: TypeScript, JavaScript, Python, PHP, CSS                            ║
-║  🔧 Main Profile: https://github.com/rojasmart                                      ║
-║                                                                                      ║
-║  💡 Want to collaborate? Fork any repo and submit a PR!                            ║
-║                                                                                      ║
-╚══════════════════════════════════════════════════════════════════════════════════════╝
-rojasmart@dev:$ `;
-            
-            ws.send(JSON.stringify({
-              type: 'output',
-              data: projectsOutput,
-            }));
-            return;
-          }
-
-          // Handle help command
-          if (data.trim() === 'help') {
-            const helpOutput = `
-Available commands:
-  profile    - Show detailed skills and expertise table
-  whoami     - Show developer identity and specialization
-  projects   - Display GitHub repositories and project links
-  clear      - Clear terminal screen
-  help       - Show this help message
-  
-System commands are restricted for security reasons.
-This is a demo terminal focused on portfolio content.
-rojasmart@dev:$ `;
-            
-            ws.send(JSON.stringify({
-              type: 'output',
-              data: helpOutput,
+              data: output,
             }));
             return;
           }
