@@ -5,92 +5,32 @@ import Link from "next/link";
 import { FaLinkedin, FaGithub, FaBehance } from "react-icons/fa";
 
 export default function Home() {
-  const [matrixText1, setMatrixText1] = useState("");
-  const [matrixText2, setMatrixText2] = useState("");
   const [terminalLines, setTerminalLines] = useState<string[]>([]);
   const [currentLineIndex, setCurrentLineIndex] = useState(0);
 
-  const words = ["Designer", "Photographer", "3D Artist", "Chess Player", "Runner", "Frontend Developer", "Web Developer"];
-
   const terminalContent = [
-    "$ cd /home/rogerio",
+    "$ cd /home/rojasmart",
     "$ ls -la",
-    "drwxr-xr-x  2 rogerio rogerio  4096 Jul 22 2025 .",
-    "drwxr-xr-x  3 root    root     4096 Jul 22 2025 ..",
-    "-rw-r--r--  1 rogerio rogerio   220 Jul 22 2025 .bash_logout",
-    "-rw-r--r--  1 rogerio rogerio  3771 Jul 22 2025 .bashrc",
-    "-rw-r--r--  1 rogerio rogerio   807 Jul 22 2025 .profile",
-    "-rw-r--r--  1 rogerio rogerio  1024 Jul 22 2025 about.txt",
-    "drwxr-xr-x  2 rogerio rogerio  4096 Jul 22 2025 projects/",
+    "drwxr-xr-x  2 rojasmart rojasmart  4096 Jul 22 2025 .",
+    "drwxr-xr-x  3 root      root       4096 Jul 22 2025 ..",
+    "-rw-r--r--  1 rojasmart rojasmart   220 Jul 22 2025 .bash_logout",
+    "-rw-r--r--  1 rojasmart rojasmart  3771 Jul 22 2025 .bashrc",
+    "-rw-r--r--  1 rojasmart rojasmart   807 Jul 22 2025 .profile",
+    "-rw-r--r--  1 rojasmart rojasmart  1024 Jul 22 2025 about.txt",
+    "-rw-r--r--  1 rojasmart rojasmart  2048 Jul 22 2025 skills.txt",
+    "drwxr-xr-x  2 rojasmart rojasmart  4096 Jul 22 2025 projects/",
     "",
     "$ cat about.txt",
     "=====================================",
     "       Welcome to rojasmart.dev      ",
     "=====================================",
+    "Full-stack Developer & Designer",
+    "Specialized in modern web technologies",
+    "Building user-centered digital products",
     "",
+    "$ echo 'Ready for new challenges...'",
+    "Ready for new challenges...",
   ];
-
-  // Matrix effect logic (existing)
-  useEffect(() => {
-    let currentWordIndex1 = 0;
-    let currentWordIndex2 = 1;
-    let animationFrame1: number;
-    let animationFrame2: number;
-
-    const randomChar = () => String.fromCharCode(33 + Math.random() * 94);
-
-    const generateMatrixEffect = (
-      targetWord: string,
-      setMatrixText: React.Dispatch<React.SetStateAction<string>>,
-      currentWordIndex: number,
-      updateIndex: () => void
-    ) => {
-      let displayText = "";
-      let charIndex = 0;
-
-      const animate = () => {
-        if (charIndex < targetWord.length) {
-          displayText = targetWord
-            .split("")
-            .map((char, i) => (i <= charIndex ? char : randomChar()))
-            .join("");
-          setMatrixText(displayText);
-          charIndex++;
-          requestAnimationFrame(animate);
-        } else {
-          setTimeout(() => {
-            updateIndex();
-          }, 3000);
-        }
-      };
-
-      animate();
-    };
-
-    const updateIndex1 = () => {
-      currentWordIndex1 = (currentWordIndex1 + 1) % words.length;
-      if (currentWordIndex1 === currentWordIndex2) {
-        currentWordIndex1 = (currentWordIndex1 + 1) % words.length;
-      }
-      generateMatrixEffect(words[currentWordIndex1], setMatrixText1, currentWordIndex1, updateIndex1);
-    };
-
-    const updateIndex2 = () => {
-      currentWordIndex2 = (currentWordIndex2 + 1) % words.length;
-      if (currentWordIndex2 === currentWordIndex1) {
-        currentWordIndex2 = (currentWordIndex2 + 1) % words.length;
-      }
-      generateMatrixEffect(words[currentWordIndex2], setMatrixText2, currentWordIndex2, updateIndex2);
-    };
-
-    generateMatrixEffect(words[currentWordIndex1], setMatrixText1, currentWordIndex1, updateIndex1);
-    generateMatrixEffect(words[currentWordIndex2], setMatrixText2, currentWordIndex2, updateIndex2);
-
-    return () => {
-      cancelAnimationFrame(animationFrame1);
-      cancelAnimationFrame(animationFrame2);
-    };
-  }, []);
 
   // Terminal typing effect
   useEffect(() => {
@@ -132,12 +72,8 @@ export default function Home() {
       <div className="h-screen flex flex-col">
         {/* Terminal Header */}
         <div className="flex items-center justify-between bg-gray-800 px-4 py-2 border-b border-gray-600">
-          <div className="flex space-x-2">
-            <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-            <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-          </div>
-          <div className="text-gray-400 text-sm">rogerio@dev:~</div>
+          <div className="flex items-center">{/* Empty div to maintain layout */}</div>
+          <div className="text-gray-400 text-sm">rojasmart@dev:~</div>
           <div className="flex space-x-4 text-gray-400">
             <Link href="#blog" className="hover:text-green-400 transition-colors">
               ./blog
@@ -168,18 +104,46 @@ export default function Home() {
           {/* Hero Section */}
           {currentLineIndex >= terminalContent.length && (
             <div className="space-y-4">
-              <div className="text-yellow-400">$ whoami</div>
-              <div className="text-6xl font-bold text-white mb-6">
-                <span className="text-green-400">&gt;</span> HI, I am <span className="text-cyan-400 underline">Rogério</span>
-              </div>
-
               <div className="text-yellow-400">$ cat skills.txt</div>
-              <div className="text-lg mb-8">
-                <span className="text-white">&gt; I am a </span>
-                <span className="text-green-400 bg-gray-900 px-2 py-1 rounded">{matrixText1}</span>
-                <span className="text-white"> and </span>
-                <span className="text-green-400 bg-gray-900 px-2 py-1 rounded">{matrixText2}</span>
-                <span className="text-white"> with +7 years of experience in designing and building intuitive, user-centered products.</span>
+              <div className="text-cyan-400 text-2xl font-bold mb-4">Professional Skills</div>
+              <div className="border border-green-600 rounded bg-gray-900 bg-opacity-50 p-4 mb-8">
+                <div className="grid grid-cols-4 gap-4">
+                  {/* Header */}
+                  <div className="text-cyan-400 font-bold border-b border-green-600 pb-2">Development</div>
+                  <div className="text-cyan-400 font-bold border-b border-green-600 pb-2">CMS Platform</div>
+                  <div className="text-cyan-400 font-bold border-b border-green-600 pb-2">Design</div>
+                  <div className="text-cyan-400 font-bold border-b border-green-600 pb-2">Admin</div>
+
+                  {/* Row 1 */}
+                  <div className="text-gray-300 py-1">Next.js</div>
+                  <div className="text-gray-300 py-1">WordPress</div>
+                  <div className="text-gray-300 py-1">Figma</div>
+                  <div className="text-gray-300 py-1">Linux</div>
+
+                  {/* Row 2 */}
+                  <div className="text-gray-300 py-1">React</div>
+                  <div className="text-gray-300 py-1">Strapi</div>
+                  <div className="text-gray-300 py-1">Adobe CC</div>
+                  <div className="text-gray-300 py-1">Docker</div>
+
+                  {/* Row 3 */}
+                  <div className="text-gray-300 py-1">TypeScript</div>
+                  <div className="text-gray-300 py-1">Contentful</div>
+                  <div className="text-gray-300 py-1">Sketch</div>
+                  <div className="text-gray-300 py-1">AWS</div>
+
+                  {/* Row 4 */}
+                  <div className="text-gray-300 py-1">Node.js</div>
+                  <div className="text-gray-300 py-1">Sanity</div>
+                  <div className="text-gray-300 py-1">Photoshop</div>
+                  <div className="text-gray-300 py-1">Git</div>
+
+                  {/* Row 5 */}
+                  <div className="text-gray-300 py-1">JavaScript</div>
+                  <div className="text-gray-300 py-1">Prismic</div>
+                  <div className="text-gray-300 py-1">Illustrator</div>
+                  <div className="text-gray-300 py-1">Nginx</div>
+                </div>
               </div>
 
               <div className="text-yellow-400">$ ls projects/</div>
