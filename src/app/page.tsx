@@ -14,6 +14,7 @@ export default function Home() {
   const [currentPath, setCurrentPath] = useState("/home/rojasmart");
   const [isTerminalExpanded, setIsTerminalExpanded] = useState(true);
   const inputRef = useRef<HTMLInputElement>(null);
+  const terminalOutputRef = useRef<HTMLDivElement>(null);
 
   // ...existing code for terminalContent, fileSystem, commands, etc...
 
@@ -141,7 +142,7 @@ export default function Home() {
     },
     pwd: () => currentPath,
     clear: () => {
-      setTerminalOutput([]);
+      setTerminalOutput(["Interactive Terminal - rojasmart.dev", "Type 'help' for available commands", ""]);
       return "";
     },
     tree: () => {
@@ -229,7 +230,7 @@ export default function Home() {
     }
   };
 
-  // Terminal typing effect (existing)
+  // Terminal typing effect
   useEffect(() => {
     const typeNextLine = () => {
       if (currentLineIndex < terminalContent.length) {
@@ -263,10 +264,19 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, [currentLineIndex, terminalContent]);
 
+  // Auto-scroll terminal output to bottom
+  useEffect(() => {
+    if (terminalOutputRef.current) {
+      terminalOutputRef.current.scrollTop = terminalOutputRef.current.scrollHeight;
+    }
+  }, [terminalOutput]);
+
   // Focus terminal input when expanded
   useEffect(() => {
     if (inputRef.current && isTerminalExpanded) {
-      inputRef.current.focus();
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 300); // Wait for animation to complete
     }
   }, [isTerminalExpanded]);
 
@@ -286,11 +296,11 @@ export default function Home() {
         </div>
 
         {/* Terminal Content */}
-        <div className="flex-1 flex">
+        <div className="flex-1 flex min-h-0">
           {/* Main Terminal Content */}
           <div
             className={`${
-              isTerminalExpanded ? "flex-1" : "w-full"
+              isTerminalExpanded ? "flex-1" : "flex-1"
             } p-6 overflow-y-auto scrollbar-thin scrollbar-thumb-green-600 scrollbar-track-gray-800 transition-all duration-300`}
           >
             {/* Initial terminal lines */}
@@ -409,9 +419,13 @@ export default function Home() {
           </div>
 
           {/* Interactive Terminal Sidebar */}
-          <div className={`${isTerminalExpanded ? "w-80" : "w-12"} border-l border-gray-600 bg-gray-900 transition-all duration-300 flex flex-col`}>
+          <div
+            className={`${
+              isTerminalExpanded ? "w-80" : "w-12"
+            } border-l border-gray-600 bg-gray-900 transition-all duration-300 flex flex-col min-h-0`}
+          >
             {/* Terminal Header with Toggle */}
-            <div className="flex items-center justify-between bg-gray-800 px-4 py-2 border-b border-gray-600">
+            <div className="flex items-center justify-between bg-gray-800 px-4 py-2 border-b border-gray-600 flex-shrink-0">
               <div className={`${isTerminalExpanded ? "block" : "hidden"} text-gray-400 text-sm font-mono`}>Interactive Terminal</div>
               <button
                 onClick={() => setIsTerminalExpanded(!isTerminalExpanded)}
@@ -424,8 +438,8 @@ export default function Home() {
 
             {/* Terminal Content - only show when expanded */}
             {isTerminalExpanded && (
-              <div className="h-full flex flex-col">
-                <div className="flex-1 p-4 overflow-y-auto max-h-96 scrollbar-thin scrollbar-thumb-green-600 scrollbar-track-gray-800">
+              <div className="flex-1 flex flex-col min-h-0">
+                <div ref={terminalOutputRef} className="flex-1 p-4 overflow-y-auto scrollbar-thin scrollbar-thumb-green-600 scrollbar-track-gray-800">
                   {terminalOutput.map((line, index) => (
                     <div key={index} className={`text-sm leading-relaxed ${line.includes("$") ? "text-green-400" : "text-gray-300"}`}>
                       {line}
@@ -433,7 +447,7 @@ export default function Home() {
                   ))}
                 </div>
 
-                <div className="p-4 border-t border-gray-600">
+                <div className="p-4 border-t border-gray-600 flex-shrink-0">
                   <form onSubmit={handleTerminalSubmit} className="flex items-center text-green-400">
                     <span className="text-sm">{currentPath}$ </span>
                     <input
@@ -453,7 +467,7 @@ export default function Home() {
             {/* Collapsed state - show terminal icon */}
             {!isTerminalExpanded && (
               <div className="flex-1 flex items-center justify-center">
-                <div className="text-gray-400 transform -rotate-90 text-xs whitespace-nowrap">TERMINAL</div>
+                <div className="text-gray-400 transform -rotate-90 text-xs whitespace-nowrap font-mono">TERMINAL</div>
               </div>
             )}
           </div>
