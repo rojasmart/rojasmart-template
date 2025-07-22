@@ -48,7 +48,11 @@ function initializeWebSocketServer() {
     // Send initial prompt
     ws.send(JSON.stringify({
       type: 'output',
-      data: 'Terminal connected. Type commands to interact with the system.\nrojasmart@dev:$ ',
+      data: `Welcome to rojasmart.dev terminal! 🚀
+
+Type 'whoami', 'profile', 'projects' or 'help' to get to know me.
+
+rojasmart@dev:$ `,
     }));
 
     // Handle shell output
