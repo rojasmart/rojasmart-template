@@ -162,7 +162,7 @@ const RealTerminal = ({ theme, fontSize, isVisible, onToggle, onOutputChange }: 
       {/* Quick Commands */}
       <div className="px-4 py-2 bg-gray-800 border-b border-gray-600">
         <div className="flex flex-wrap gap-2">
-          {["ls -la", "pwd", "whoami", "node --version", "npm --version"].map((cmd) => (
+          {["ls -la", "pwd", "whoami", "profile", "help", "node --version"].map((cmd) => (
             <button
               key={cmd}
               onClick={() => executeQuickCommand(cmd)}

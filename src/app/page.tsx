@@ -53,6 +53,36 @@ export default function Home() {
     setTerminalOutput(output);
   };
 
+  // Profile command handler
+  const executeProfileCommand = () => {
+    const profileOutput = [
+      "$ profile",
+      "",
+      "╔══════════════════════════════════════════════════════════════════════════════════════╗",
+      "║                                  ROJASMART PROFILE                                   ║",
+      "╠══════════════════════════════════════════════════════════════════════════════════════╣",
+      "║ DEVELOPMENT          │ DESIGN               │ ADMIN/DEVOPS        │ CMS PLATFORMS    ║",
+      "╠══════════════════════════════════════════════════════════════════════════════════════╣",
+      "║ • React/Next.js      │ • UI/UX Design       │ • Linux Server       │ • WordPress      ║",
+      "║ • TypeScript         │ • Figma/Adobe XD     │ • Docker             │ • Drupal         ║",
+      "║ • Node.js            │ • Responsive Design  │ • AWS/Cloud          │ • Strapi         ║",
+      "║ • Python             │ • Design Systems     │ • CI/CD Pipelines    │ • Contentful     ║",
+      "║ • JavaScript (ES6+)  │ • Prototyping        │ • Database Admin     │ • Sanity         ║",
+      "║ • HTML5/CSS3         │ • Brand Identity     │ • Nginx/Apache       │ • Ghost          ║",
+      "║ • Tailwind CSS       │ • Web Animation      │ • Git/Version Ctrl   │ • Netlify CMS    ║",
+      "║ • APIs/REST          │ • Mobile Design      │ • Server Security    │ • Forestry       ║",
+      "╚══════════════════════════════════════════════════════════════════════════════════════╝",
+      "",
+      "📧 Contact: rogeriosvaldo@gmail.com",
+      "🌐 Location: Available for remote work worldwide",
+      "💼 Status: Open for freelance projects and collaborations",
+      "",
+      "Type 'help' to see available commands",
+      "",
+    ];
+    setTerminalOutput(profileOutput);
+  };
+
   return (
     <div className={`min-h-screen ${currentTheme.bg} ${currentTheme.primary} font-mono overflow-hidden`}>
       {/* Terminal Window */}
@@ -109,7 +139,8 @@ export default function Home() {
             </div>
             <div className="mt-3 text-xs text-gray-400">
               Real terminal with full command support. Try commands like: <span className={currentTheme.accent}>ls</span>,{" "}
-              <span className={currentTheme.accent}>pwd</span>, <span className={currentTheme.accent}>echo "hello world"</span>
+              <span className={currentTheme.accent}>pwd</span>, <span className={currentTheme.accent}>profile</span>,{" "}
+              <span className={currentTheme.accent}>help</span>
             </div>
           </div>
         )}
@@ -139,6 +170,10 @@ export default function Home() {
                         ? "text-red-400"
                         : line.includes("Connected")
                         ? currentTheme.primary
+                        : line.includes("╔") || line.includes("║") || line.includes("╚") || line.includes("╠") || line.includes("╣")
+                        ? currentTheme.secondary
+                        : line.includes("📧") || line.includes("🌐") || line.includes("💼")
+                        ? currentTheme.accent
                         : currentTheme.text
                     }`}
                   >
@@ -173,8 +208,14 @@ export default function Home() {
                     <div>Specialized in modern web technologies</div>
                     <div>Building user-centered digital products</div>
                     <div></div>
-                    <div className={currentTheme.accent}>$ echo 'Type commands in the Real Terminal on the right →'</div>
-                    <div className={`${currentTheme.text} italic`}>Type commands in the Real Terminal on the right →</div>
+                    <div className={currentTheme.accent}>$ echo 'Available Commands:'</div>
+                    <div className={`${currentTheme.text} ml-4`}>
+                      <div className={`${currentTheme.primary} cursor-pointer hover:underline`} onClick={executeProfileCommand}>
+                        • profile - Show detailed skills table
+                      </div>
+                      <div className={currentTheme.text}>• help - Show all available commands</div>
+                      <div className={currentTheme.text}>• Or use the Real Terminal on the right →</div>
+                    </div>
                   </div>
                 </div>
 

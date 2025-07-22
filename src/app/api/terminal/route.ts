@@ -94,6 +94,60 @@ function initializeWebSocketServer() {
             return;
           }
 
+          // Handle profile command
+          if (data.trim() === 'profile') {
+            const profileOutput = `
+╔══════════════════════════════════════════════════════════════════════════════════════╗
+║                                  ROJASMART PROFILE                                   ║
+╠══════════════════════════════════════════════════════════════════════════════════════╣
+║ DEVELOPMENT          │ DESIGN               │ ADMIN/DEVOPS        │ CMS PLATFORMS    ║
+╠══════════════════════════════════════════════════════════════════════════════════════╣
+║ • React/Next.js      │ • UI/UX Design       │ • Linux Server       │ • WordPress      ║
+║ • TypeScript         │ • Figma/Adobe XD     │ • Docker             │ • Drupal         ║
+║ • Node.js            │ • Responsive Design  │ • AWS/Cloud          │ • Strapi         ║
+║ • Python             │ • Design Systems     │ • CI/CD Pipelines    │ • Contentful     ║
+║ • JavaScript (ES6+)  │ • Prototyping        │ • Database Admin     │ • Sanity         ║
+║ • HTML5/CSS3         │ • Brand Identity     │ • Nginx/Apache       │ • Ghost          ║
+║ • Tailwind CSS       │ • Web Animation      │ • Git/Version Ctrl   │ • Netlify CMS    ║
+║ • APIs/REST          │ • Mobile Design      │ • Server Security    │ • Forestry       ║
+╚══════════════════════════════════════════════════════════════════════════════════════╝
+
+📧 Contact: rogeriosvaldo@gmail.com
+🌐 Location: Available for remote work worldwide
+💼 Status: Open for freelance projects and collaborations
+
+Type 'help' to see available commands
+rojasmart@dev:$ `;
+            
+            ws.send(JSON.stringify({
+              type: 'output',
+              data: profileOutput,
+            }));
+            return;
+          }
+
+          // Handle help command
+          if (data.trim() === 'help') {
+            const helpOutput = `
+Available commands:
+  profile    - Show detailed skills and expertise table
+  ls         - List directory contents
+  pwd        - Show current directory
+  whoami     - Show current user
+  clear      - Clear terminal screen
+  node -v    - Show Node.js version
+  npm -v     - Show npm version
+  
+Standard bash commands are also available.
+rojasmart@dev:$ `;
+            
+            ws.send(JSON.stringify({
+              type: 'output',
+              data: helpOutput,
+            }));
+            return;
+          }
+
           // Send command to shell
           session.shell.stdin.write(data + '\n');
         } else if (type === 'resize') {
