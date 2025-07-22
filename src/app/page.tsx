@@ -1,7 +1,76 @@
+"use client";
+
+import { useState, useEffect } from "react";
+
 import Link from "next/link";
 import { FaLinkedin, FaGithub, FaBehance } from "react-icons/fa"; // Import icons
 
 export default function Home() {
+  const [matrixText1, setMatrixText1] = useState("");
+  const [matrixText2, setMatrixText2] = useState("");
+  const words = ["Designer", "Photographer", "3D Artist", "Chess Player", "Runner", "Frontend Developer", "Web Developer"];
+
+  useEffect(() => {
+    let currentWordIndex1 = 0;
+    let currentWordIndex2 = 1; // Start with a different word for the second text
+    let animationFrame1: number;
+    let animationFrame2: number;
+
+    const randomChar = () => String.fromCharCode(33 + Math.random() * 94); // Random ASCII characters
+
+    const generateMatrixEffect = (
+      targetWord: string,
+      setMatrixText: React.Dispatch<React.SetStateAction<string>>,
+      currentWordIndex: number,
+      updateIndex: () => void
+    ) => {
+      let displayText = "";
+      let charIndex = 0;
+
+      const animate = () => {
+        if (charIndex < targetWord.length) {
+          displayText = targetWord
+            .split("")
+            .map((char, i) => (i <= charIndex ? char : randomChar()))
+            .join("");
+          setMatrixText(displayText);
+          charIndex++;
+          requestAnimationFrame(animate);
+        } else {
+          setTimeout(() => {
+            updateIndex();
+          }, 3000); // Pause before switching to the next word
+        }
+      };
+
+      animate();
+    };
+
+    const updateIndex1 = () => {
+      currentWordIndex1 = (currentWordIndex1 + 1) % words.length;
+      if (currentWordIndex1 === currentWordIndex2) {
+        currentWordIndex1 = (currentWordIndex1 + 1) % words.length; // Ensure no overlap
+      }
+      generateMatrixEffect(words[currentWordIndex1], setMatrixText1, currentWordIndex1, updateIndex1);
+    };
+
+    const updateIndex2 = () => {
+      currentWordIndex2 = (currentWordIndex2 + 1) % words.length;
+      if (currentWordIndex2 === currentWordIndex1) {
+        currentWordIndex2 = (currentWordIndex2 + 1) % words.length; // Ensure no overlap
+      }
+      generateMatrixEffect(words[currentWordIndex2], setMatrixText2, currentWordIndex2, updateIndex2);
+    };
+
+    generateMatrixEffect(words[currentWordIndex1], setMatrixText1, currentWordIndex1, updateIndex1);
+    generateMatrixEffect(words[currentWordIndex2], setMatrixText2, currentWordIndex2, updateIndex2);
+
+    return () => {
+      cancelAnimationFrame(animationFrame1);
+      cancelAnimationFrame(animationFrame2);
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
@@ -20,9 +89,12 @@ export default function Home() {
 
       {/* Hero */}
       <section className="w-full px-6 py-20">
-        <h1 className="text-6xl font-bold text-black mb-6">HI, I am Rogério</h1>
+        <h1 className="text-6xl font-bold text-black mb-6">
+          HI, I am <span className="underline">Rogério</span>
+        </h1>
         <p className="text-lg text-black mb-4">
-          I am a passionate Frontend and Web Developer with +7 years of experience in designing and building intuitive, user-centered products.
+          I am a <span className="text-green-400 font-mono">{matrixText1}</span> and <span className="text-green-400 font-mono">{matrixText2}</span>{" "}
+          with +7 years of experience in designing and building intuitive, user-centered products.
         </p>
       </section>
 
