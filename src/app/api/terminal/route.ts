@@ -81,7 +81,37 @@ function initializeWebSocketServer() {
         const { type, data } = JSON.parse(message.toString());
         
         if (type === 'command' && session.shell.stdin) {
-          // Special handling for certain commands
+          const command = data.trim().toLowerCase();
+          
+          // List of blocked commands for security
+          const blockedCommands = [
+            'rm', 'rmdir', 'del', 'delete', 'mv', 'move', 'cp', 'copy',
+            'chmod', 'chown', 'sudo', 'su', 'passwd', 'useradd', 'userdel',
+            'kill', 'killall', 'pkill', 'ps', 'top', 'htop', 'netstat',
+            'ifconfig', 'ip', 'ping', 'wget', 'curl', 'ssh', 'scp', 'ftp',
+            'mount', 'umount', 'fdisk', 'mkfs', 'fsck', 'dd', 'tar', 'zip',
+            'unzip', 'gunzip', 'gzip', 'find', 'locate', 'which', 'whereis',
+            'ls', 'dir', 'pwd', 'cd', 'mkdir', 'touch', 'cat', 'less', 'more',
+            'head', 'tail', 'grep', 'awk', 'sed', 'sort', 'wc', 'diff',
+            'history', 'alias', 'export', 'env', 'set', 'unset', 'source',
+            'bash', 'sh', 'zsh', 'fish', 'cmd', 'powershell', 'python', 'node',
+            'npm', 'yarn', 'git', 'docker', 'systemctl', 'service', 'crontab'
+          ];
+
+          // Check if command starts with any blocked command
+          const isBlocked = blockedCommands.some(blocked => 
+            command === blocked || command.startsWith(blocked + ' ')
+          );
+
+          if (isBlocked) {
+            ws.send(JSON.stringify({
+              type: 'output',
+              data: `Command '${data.trim()}' is not allowed for security reasons.\nUse 'help' to see available commands.\nrojasmart@dev:$ `,
+            }));
+            return;
+          }
+
+          // Special handling for allowed commands
           if (data.trim() === 'clear') {
             ws.send(JSON.stringify({
               type: 'clear',
@@ -220,13 +250,11 @@ Available commands:
   profile    - Show detailed skills and expertise table
   whoami     - Show developer identity and specialization
   projects   - Display GitHub repositories and project links
-  ls         - List directory contents
-  pwd        - Show current directory
   clear      - Clear terminal screen
-  node -v    - Show Node.js version
-  npm -v     - Show npm version
+  help       - Show this help message
   
-Standard bash commands are also available.
+System commands are restricted for security reasons.
+This is a demo terminal focused on portfolio content.
 rojasmart@dev:$ `;
             
             ws.send(JSON.stringify({
@@ -236,8 +264,12 @@ rojasmart@dev:$ `;
             return;
           }
 
-          // Send command to shell
-          session.shell.stdin.write(data + '\n');
+          // If we reach here, it's an unrecognized command
+          ws.send(JSON.stringify({
+            type: 'output',
+            data: `Command '${data.trim()}' not found.\nUse 'help' to see available commands.\nrojasmart@dev:$ `,
+          }));
+          return;
         } else if (type === 'resize') {
           // Handle terminal resize
           if (session.shell.pid) {

@@ -162,7 +162,7 @@ const RealTerminal = ({ theme, fontSize, isVisible, onToggle, onOutputChange }: 
       {/* Quick Commands */}
       <div className="px-4 py-2 bg-gray-800 border-b border-gray-600">
         <div className="flex flex-wrap gap-2">
-          {["ls -la", "pwd", "whoami", "profile", "projects", "help"].map((cmd) => (
+          {["whoami", "profile", "projects", "help"].map((cmd) => (
             <button
               key={cmd}
               onClick={() => executeQuickCommand(cmd)}
@@ -200,7 +200,7 @@ const RealTerminal = ({ theme, fontSize, isVisible, onToggle, onOutputChange }: 
             value={input}
             onChange={(e) => setInput(e.target.value)}
             className={`bg-transparent outline-none flex-1 ml-2 ${theme.primary} text-${fontSize} font-mono`}
-            placeholder={isConnected ? "Enter command (try: ls, pwd, node -v)" : "Connecting..."}
+            placeholder={isConnected ? "Enter command (try: whoami, profile, projects)" : "Connecting..."}
             disabled={!isConnected}
           />
         </form>
