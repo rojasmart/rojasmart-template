@@ -19,17 +19,26 @@ const RealTerminal = ({ theme, fontSize, isVisible, onToggle, onOutputChange }: 
 
   // Initialize WebSocket connection
   useEffect(() => {
+    console.log("🔧 RealTerminal: useEffect triggered, isVisible:", isVisible);
     if (!isVisible) return;
 
     const connectWebSocket = () => {
+      console.log("🔌 RealTerminal: Attempting to connect WebSocket...");
       try {
         // First, initialize the WebSocket server
+        console.log("📡 RealTerminal: Fetching /api/terminal...");
         fetch("/api/terminal")
-          .then(() => {
+          .then((response) => {
+            console.log("📡 RealTerminal: /api/terminal response:", response.status, response.statusText);
+            if (!response.ok) {
+              throw new Error(`API responded with status: ${response.status}`);
+            }
             // Connect to WebSocket
+            console.log("🔌 RealTerminal: Creating WebSocket connection to ws://localhost:3001");
             wsRef.current = new WebSocket("ws://localhost:3001");
 
             wsRef.current.onopen = () => {
+              console.log("✅ RealTerminal: WebSocket connection established!");
               setIsConnected(true);
               const initialOutput = ["Terminal connected. Real Node.js environment ready."];
               setOutput(initialOutput);
@@ -37,45 +46,54 @@ const RealTerminal = ({ theme, fontSize, isVisible, onToggle, onOutputChange }: 
             };
 
             wsRef.current.onmessage = (event) => {
+              console.log("📨 RealTerminal: WebSocket message received:", event.data);
               try {
                 const { type, data } = JSON.parse(event.data);
+                console.log("📨 RealTerminal: Parsed message - type:", type, "data:", data);
 
                 if (type === "clear") {
+                  console.log("🧹 RealTerminal: Clearing terminal output");
                   setOutput([]);
+                  onOutputChange([]); // Call separately
                   return;
                 }
 
                 if (type === "output" || type === "error") {
+                  const lines = data.split("\n").filter((line: string) => line !== "");
+                  console.log("📝 RealTerminal: Adding lines to output:", lines);
                   setOutput((prev) => {
-                    const lines = data.split("\n").filter((line: string) => line !== "");
                     const newOutput = [...prev, ...lines];
-                    onOutputChange(newOutput);
+                    console.log("📝 RealTerminal: Updated output state:", newOutput);
                     return newOutput;
                   });
+                  onOutputChange([...output, ...lines]); // Use the current output state
                 }
               } catch (error) {
-                console.error("Error parsing WebSocket message:", error);
+                console.error("❌ RealTerminal: Error parsing WebSocket message:", error);
               }
             };
 
             wsRef.current.onclose = () => {
+              console.log("🔌 RealTerminal: WebSocket connection closed");
               setIsConnected(false);
               setOutput((prev) => [...prev, "Connection closed. Attempting to reconnect..."]);
 
               // Attempt to reconnect after 3 seconds
+              console.log("🔄 RealTerminal: Scheduling reconnection in 3 seconds...");
               setTimeout(connectWebSocket, 3000);
             };
 
             wsRef.current.onerror = (error) => {
-              console.error("WebSocket error:", error);
+              console.error("❌ RealTerminal: WebSocket error:", error);
               setOutput((prev) => [...prev, "Connection error. Check if server is running."]);
             };
           })
-          .catch(() => {
+          .catch((error) => {
+            console.error("❌ RealTerminal: Failed to initialize WebSocket server:", error);
             setOutput((prev) => [...prev, "Failed to initialize WebSocket server."]);
           });
       } catch (error) {
-        console.error("Connection error:", error);
+        console.error("❌ RealTerminal: Connection error:", error);
         setOutput((prev) => [...prev, "Failed to connect to terminal."]);
       }
     };
@@ -83,6 +101,7 @@ const RealTerminal = ({ theme, fontSize, isVisible, onToggle, onOutputChange }: 
     connectWebSocket();
 
     return () => {
+      console.log("🧹 RealTerminal: Cleaning up WebSocket connection");
       if (wsRef.current) {
         wsRef.current.close();
       }
@@ -92,14 +111,17 @@ const RealTerminal = ({ theme, fontSize, isVisible, onToggle, onOutputChange }: 
   // Auto-scroll to bottom
   useEffect(() => {
     if (terminalRef.current) {
+      console.log("📜 RealTerminal: Auto-scrolling terminal to bottom");
       terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
     }
   }, [output]);
 
   // Focus input when terminal becomes visible
   useEffect(() => {
+    console.log("🎯 RealTerminal: Focus effect triggered, isVisible:", isVisible);
     if (isVisible && inputRef.current) {
       setTimeout(() => {
+        console.log("🎯 RealTerminal: Focusing input field");
         inputRef.current?.focus();
       }, 300);
     }
@@ -107,47 +129,64 @@ const RealTerminal = ({ theme, fontSize, isVisible, onToggle, onOutputChange }: 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("⌨️ RealTerminal: Form submitted with input:", input);
 
-    if (!input.trim() || !wsRef.current || !isConnected) return;
+    if (!input.trim() || !wsRef.current || !isConnected) {
+      console.log("⚠️ RealTerminal: Command rejected - input:", input.trim(), "wsRef:", !!wsRef.current, "isConnected:", isConnected);
+      return;
+    }
 
     // Add command to output
     const commandOutput = `${currentPath}$ ${input}`;
+    console.log("📝 RealTerminal: Adding command to output:", commandOutput);
     setOutput((prev) => {
       const newOutput = [...prev, commandOutput];
       onOutputChange(newOutput);
+      console.log("📝 RealTerminal: Updated output with command:", newOutput);
       return newOutput;
     });
 
     // Send command to WebSocket server
-    wsRef.current.send(
-      JSON.stringify({
-        type: "command",
-        data: input,
-      })
-    );
+    const message = JSON.stringify({
+      type: "command",
+      data: input,
+    });
+    console.log("📤 RealTerminal: Sending command to WebSocket:", message);
+    wsRef.current.send(message);
 
     setInput("");
   };
 
   const executeQuickCommand = (command: string) => {
-    if (!wsRef.current || !isConnected) return;
+    console.log("🚀 RealTerminal: Executing quick command:", command);
+    if (!wsRef.current || !isConnected) {
+      console.log("⚠️ RealTerminal: Quick command rejected - wsRef:", !!wsRef.current, "isConnected:", isConnected);
+      return;
+    }
 
     const commandOutput = `${currentPath}$ ${command}`;
+    console.log("📝 RealTerminal: Adding quick command to output:", commandOutput);
     setOutput((prev) => {
       const newOutput = [...prev, commandOutput];
       onOutputChange(newOutput);
+      console.log("📝 RealTerminal: Updated output with quick command:", newOutput);
       return newOutput;
     });
 
-    wsRef.current.send(
-      JSON.stringify({
-        type: "command",
-        data: command,
-      })
-    );
+    const message = JSON.stringify({
+      type: "command",
+      data: command,
+    });
+    console.log("📤 RealTerminal: Sending quick command to WebSocket:", message);
+    wsRef.current.send(message);
   };
 
-  if (!isVisible) return null;
+  if (!isVisible) {
+    console.log("👁️ RealTerminal: Component not visible, returning null");
+    return null;
+  }
+
+  console.log("🎨 RealTerminal: Rendering component - isConnected:", isConnected, "output length:", output.length);
 
   return (
     <div className="flex flex-col h-full bg-gray-900">
