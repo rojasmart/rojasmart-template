@@ -1,17 +1,48 @@
-╔══════════════════════════════════════════════════════════════════════════════════════╗
-║                                  ROJASMART PROFILE                                   ║
-╠══════════════════════════════════════════════════════════════════════════════════════╣
-║ DEVELOPMENT          │ DESIGN               │ ADMIN/DEVOPS        │ CMS PLATFORMS    ║
-╠══════════════════════════════════════════════════════════════════════════════════════╣
-║ • React/Next.js      │ • UI/UX Design       │ • Linux Server       │ • WordPress      ║
-║ • TypeScript         │ • Figma/Adobe XD     │ • Docker             │ • Drupal         ║
-║ • Node.js            │ • Responsive Design  │ • AWS/Cloud          │ • Strapi         ║
-║ • Python             │ • Design Systems     │ • CI/CD Pipelines    │ • Contentful     ║
-║ • JavaScript (ES6+)  │ • Prototyping        │ • Database Admin     │ • Sanity         ║
-║ • HTML5/CSS3         │ • Brand Identity     │ • Nginx/Apache       │ • Ghost          ║
-║ • Tailwind CSS       │ • Web Animation      │ • Git/Version Ctrl   │ • Netlify CMS    ║
-║ • APIs/REST          │ • Mobile Design      │ • Server Security    │ • Forestry       ║
-╚══════════════════════════════════════════════════════════════════════════════════════╝
+===================================================================
+                            PROFILE
+===================================================================
+
+DEVELOPMENT:
+• React/Next.js
+• TypeScript
+• Node.js
+• Python
+• JavaScript (ES6+)
+• HTML5/CSS3
+• Tailwind CSS
+• APIs/REST
+
+DESIGN:
+• UI/UX Design
+• Figma/Adobe XD
+• Responsive Design
+• Design Systems
+• Prototyping
+• Brand Identity
+• Web Animation
+• Mobile Design
+
+ADMIN/DEVOPS:
+• Linux Server
+• Docker
+• AWS/Cloud
+• CI/CD Pipelines
+• Database Admin
+• Nginx/Apache
+• Git/Version Control
+• Server Security
+
+CMS PLATFORMS:
+• WordPress
+• Drupal
+• Strapi
+• Contentful
+• Sanity
+• Ghost
+• Netlify CMS
+• Forestry
+
+===================================================================
 
 📧 Contact: rogeriosvaldo@gmail.com
 🌐 Location: Available for remote work worldwide

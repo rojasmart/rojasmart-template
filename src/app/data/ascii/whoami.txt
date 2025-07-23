@@ -1,13 +1,13 @@
-╔══════════════════════════════════════════════════════════════════╗
-║                           WHO AM I?                              ║
-╠══════════════════════════════════════════════════════════════════╣
-║                                                                  ║
-║                    Full-stack Developer & Designer               ║
-║                 Specialized in modern web technologies           ║
-║                Building user-centered digital products           ║
-║                                                                  ║
-║    ⚡ Creating innovative solutions that bridge design & code    ║
-║    🎨 Turning complex ideas into beautiful, functional products  ║
-║    🚀 Passionate about user experience and clean architecture    ║
-║                                                                  ║
-╚══════════════════════════════════════════════════════════════════╝
+===================================================================
+                           WHO AM I?
+===================================================================
+
+                    Full-stack Developer & Designer
+                 Specialized in modern web technologies
+                Building user-centered digital products
+
+    ⚡ Creating innovative solutions that bridge design & code
+    🎨 Turning complex ideas into beautiful, functional products
+    🚀 Passionate about user experience and clean architecture
+
+===================================================================
