@@ -168,123 +168,125 @@ export default function Home() {
             }`}
           >
             {navigationMode === "simple" ? (
-              /* Simple Navigation Mode */
-              <div className="max-w-4xl mx-auto">
-                <div className="mb-12">
-                  <h1 className={`text-4xl font-bold ${currentTheme.primary} mb-4`}>Hi, I'm Rogério</h1>
-                  <p className={`text-xl ${currentTheme.text} mb-8`}>Full-stack Developer & Designer specialized in modern web technologies</p>
-                  <div className="flex flex-wrap gap-4">
-                    <button
-                      onClick={() => {
-                        const aboutContent = [
-                          "===================================================================",
-                          "                           WHO AM I?",
-                          "===================================================================",
-                          "",
-                          "                    Full-stack Developer & Designer",
-                          "                 Specialized in modern web technologies",
-                          "                Building user-centered digital products",
-                          "",
-                          "    ⚡ Creating innovative solutions that bridge design & code",
-                          "    🎨 Turning complex ideas into beautiful, functional products",
-                          "    🚀 Passionate about user experience and clean architecture",
-                          "",
-                          "===================================================================",
-                        ];
-                        setTerminalOutput(["$ whoami", "", ...aboutContent, ""]);
-                      }}
-                      className={`px-6 py-3 ${currentTheme.border} border ${currentTheme.primary} hover:bg-gray-800 transition-colors rounded-lg`}
-                    >
-                      About Me
-                    </button>
-                    <button
-                      onClick={executeProfileCommand}
-                      className={`px-6 py-3 ${currentTheme.border} border ${currentTheme.secondary} hover:bg-gray-800 transition-colors rounded-lg`}
-                    >
-                      Skills & Experience
-                    </button>
-                    <button
-                      onClick={() => {
-                        const projectsContent = [
-                          "===================================================================",
-                          "                          GITHUB PROJECTS",
-                          "===================================================================",
-                          "",
-                          "🚀 Featured Repositories:",
-                          "",
-                          "📁 rojasmart.dev",
-                          "   • Terminal-style portfolio website built with Next.js & TypeScript",
-                          "   • Real-time WebSocket terminal integration",
-                          "   • 🔗 https://github.com/rojasmart/rojasmart.dev",
-                          "",
-                          "📁 next-dashboard",
-                          "   • Modern admin dashboard with Next.js 14 App Router",
-                          "   • TailwindCSS, Prisma, PostgreSQL integration",
-                          "   • 🔗 https://github.com/rojasmart/next-dashboard",
-                          "",
-                          "🌟 Total Public Repositories: 25+",
-                          "📊 Languages: TypeScript, JavaScript, Python, PHP, CSS",
-                          "🔧 Main Profile: https://github.com/rojasmart",
-                          "",
-                          "===================================================================",
-                        ];
-                        setTerminalOutput(["$ projects", "", ...projectsContent, ""]);
-                      }}
-                      className={`px-6 py-3 ${currentTheme.border} border ${currentTheme.accent} hover:bg-gray-800 transition-colors rounded-lg`}
-                    >
-                      Projects
-                    </button>
-                  </div>
-                </div>
-
-                {/* Services Grid */}
-                <div className="grid md:grid-cols-2 gap-8 mb-12">
-                  <div className={`${currentTheme.border} border rounded-lg p-8 bg-gray-900 bg-opacity-50`}>
-                    <h3 className={`text-2xl font-bold ${currentTheme.secondary} mb-4`}>Web Development</h3>
-                    <p className={`${currentTheme.text} mb-4`}>
-                      Custom websites and web applications built with modern frameworks like React, Next.js, and TypeScript.
-                    </p>
-                    <ul className={`${currentTheme.text} text-sm space-y-1`}>
-                      <li>• Frontend Development</li>
-                      <li>• Backend APIs</li>
-                      <li>• Database Design</li>
-                      <li>• Performance Optimization</li>
-                    </ul>
-                  </div>
-
-                  <div className={`${currentTheme.border} border rounded-lg p-8 bg-gray-900 bg-opacity-50`}>
-                    <h3 className={`text-2xl font-bold ${currentTheme.secondary} mb-4`}>UI/UX Design</h3>
-                    <p className={`${currentTheme.text} mb-4`}>Beautiful and functional user interfaces that provide excellent user experiences.</p>
-                    <ul className={`${currentTheme.text} text-sm space-y-1`}>
-                      <li>• User Interface Design</li>
-                      <li>• User Experience Research</li>
-                      <li>• Prototyping & Wireframing</li>
-                      <li>• Design Systems</li>
-                    </ul>
-                  </div>
-                </div>
-
-                {/* Contact Section */}
-                <div className={`${currentTheme.border} border rounded-lg p-8 bg-gray-900 bg-opacity-30 text-center`}>
-                  <h3 className={`text-2xl font-bold ${currentTheme.accent} mb-4`}>Let's Work Together</h3>
-                  <p className={`${currentTheme.text} mb-6`}>Ready to start your project? I'm available for freelance work and collaborations.</p>
-                  <a
-                    href="mailto:rogeriosvaldo@gmail.com"
-                    className={`inline-block px-8 py-3 ${currentTheme.primary} border ${currentTheme.border} hover:bg-gray-800 transition-colors rounded-lg font-semibold`}
-                  >
-                    📧 rogeriosvaldo@gmail.com
-                  </a>
-                </div>
-
-                {/* Display terminal output if any */}
-                {terminalOutput.length > 0 && (
-                  <div className="mt-12">
-                    <div className={`${currentTheme.secondary} text-lg font-bold mb-4 flex items-center`}>
-                      <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                      Output
+              /* Simple Navigation Mode - Output right, navigation/services/contact left */
+              <div className="flex flex-row gap-10 w-full min-h-[80vh]">
+                {/* Left: Navigation, Services and Contact */}
+                <div className="w-[30%] min-w-[260px] flex flex-col justify-between py-8">
+                  {/* Navigation Buttons */}
+                  <div className="mb-10">
+                    <h1 className={`text-5xl font-bold ${currentTheme.primary} mb-4`}>Hi, I'm Rogério</h1>
+                    <p className={`text-2xl ${currentTheme.text} mb-8`}>Full-stack Developer & Designer specialized in modern web technologies</p>
+                    <div className="flex flex-wrap gap-4">
+                      <button
+                        onClick={() => {
+                          const aboutContent = [
+                            "===================================================================",
+                            "                           WHO AM I?",
+                            "===================================================================",
+                            "",
+                            "                    Full-stack Developer & Designer",
+                            "                 Specialized in modern web technologies",
+                            "                Building user-centered digital products",
+                            "",
+                            "    ⚡ Creating innovative solutions that bridge design & code",
+                            "    🎨 Turning complex ideas into beautiful, functional products",
+                            "    🚀 Passionate about user experience and clean architecture",
+                            "",
+                            "===================================================================",
+                          ];
+                          setTerminalOutput(["$ whoami", "", ...aboutContent, ""]);
+                        }}
+                        className={`px-6 py-3 ${currentTheme.border} border ${currentTheme.primary} hover:bg-gray-800 transition-colors rounded-lg`}
+                      >
+                        About Me
+                      </button>
+                      <button
+                        onClick={executeProfileCommand}
+                        className={`px-6 py-3 ${currentTheme.border} border ${currentTheme.secondary} hover:bg-gray-800 transition-colors rounded-lg`}
+                      >
+                        Skills & Experience
+                      </button>
+                      <button
+                        onClick={() => {
+                          const projectsContent = [
+                            "===================================================================",
+                            "                          GITHUB PROJECTS",
+                            "===================================================================",
+                            "",
+                            "🚀 Featured Repositories:",
+                            "",
+                            "📁 rojasmart.dev",
+                            "   • Terminal-style portfolio website built with Next.js & TypeScript",
+                            "   • Real-time WebSocket terminal integration",
+                            "   • 🔗 https://github.com/rojasmart/rojasmart.dev",
+                            "",
+                            "📁 next-dashboard",
+                            "   • Modern admin dashboard with Next.js 14 App Router",
+                            "   • TailwindCSS, Prisma, PostgreSQL integration",
+                            "   • 🔗 https://github.com/rojasmart/next-dashboard",
+                            "",
+                            "🌟 Total Public Repositories: 25+",
+                            "📊 Languages: TypeScript, JavaScript, Python, PHP, CSS",
+                            "🔧 Main Profile: https://github.com/rojasmart",
+                            "",
+                            "===================================================================",
+                          ];
+                          setTerminalOutput(["$ projects", "", ...projectsContent, ""]);
+                        }}
+                        className={`px-6 py-3 ${currentTheme.border} border ${currentTheme.accent} hover:bg-gray-800 transition-colors rounded-lg`}
+                      >
+                        Projects
+                      </button>
                     </div>
-                    <div className={`bg-gray-900 bg-opacity-50 p-6 rounded-lg ${currentTheme.border} border`}>
-                      {terminalOutput.map((line, index) => (
+                  </div>
+                  {/* Services Grid */}
+                  <div className="grid md:grid-cols-2 gap-8 mb-12">
+                    <div className={`${currentTheme.border} border rounded-lg p-8 bg-gray-900 bg-opacity-50`}>
+                      <h3 className={`text-2xl font-bold ${currentTheme.secondary} mb-4`}>Web Development</h3>
+                      <p className={`${currentTheme.text} mb-4`}>
+                        Custom websites and web applications built with modern frameworks like React, Next.js, and TypeScript.
+                      </p>
+                      <ul className={`${currentTheme.text} text-sm space-y-1`}>
+                        <li>• Frontend Development</li>
+                        <li>• Backend APIs</li>
+                        <li>• Database Design</li>
+                        <li>• Performance Optimization</li>
+                      </ul>
+                    </div>
+                    <div className={`${currentTheme.border} border rounded-lg p-8 bg-gray-900 bg-opacity-50`}>
+                      <h3 className={`text-2xl font-bold ${currentTheme.secondary} mb-4`}>UI/UX Design</h3>
+                      <p className={`${currentTheme.text} mb-4`}>Beautiful and functional user interfaces that provide excellent user experiences.</p>
+                      <ul className={`${currentTheme.text} text-sm space-y-1`}>
+                        <li>• User Interface Design</li>
+                        <li>• User Experience Research</li>
+                        <li>• Prototyping & Wireframing</li>
+                        <li>• Design Systems</li>
+                      </ul>
+                    </div>
+                  </div>
+                  {/* Contact Section */}
+                  <div className={`${currentTheme.border} border rounded-lg p-8 bg-gray-900 bg-opacity-30 text-center`}>
+                    <h3 className={`text-2xl font-bold ${currentTheme.accent} mb-4`}>Let's Work Together</h3>
+                    <p className={`${currentTheme.text} mb-6`}>Ready to start your project? I'm available for freelance work and collaborations.</p>
+                    <a
+                      href="mailto:rogeriosvaldo@gmail.com"
+                      className={`inline-block px-8 py-3 ${currentTheme.primary} border ${currentTheme.border} hover:bg-gray-800 transition-colors rounded-lg font-semibold`}
+                    >
+                      📧 rogeriosvaldo@gmail.com
+                    </a>
+                  </div>
+                </div>
+                {/* Right: Output/Terminal */}
+                <div className="w-[70%] max-w-full flex-shrink-0 py-8">
+                  <div className={`${currentTheme.secondary} text-lg font-bold mb-4 flex items-center`}>
+                    <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                    Output
+                  </div>
+                  <div className={`bg-gray-900 bg-opacity-50 p-6 rounded-lg ${currentTheme.border} border max-h-[80vh] overflow-y-auto`}>
+                    {terminalOutput.length === 0 ? (
+                      <div className={`${currentTheme.text} italic`}>No output yet. Clique nos botões acima para ver informações.</div>
+                    ) : (
+                      terminalOutput.map((line, index) => (
                         <div
                           key={index}
                           className={`leading-relaxed text-${terminalConfig.fontSize} font-mono mb-1 ${
@@ -299,10 +301,10 @@ export default function Home() {
                         >
                           {line}
                         </div>
-                      ))}
-                    </div>
+                      ))
+                    )}
                   </div>
-                )}
+                </div>
               </div>
             ) : (
               /* Terminal Mode - existing content */
