@@ -163,9 +163,9 @@ export default function Home() {
         <div className="flex-1 flex min-h-0">
           {/* Main Content - Terminal Output Display */}
           <div
-            className={`${
-              isTerminalExpanded && navigationMode === "terminal" ? "flex-1" : "w-full"
-            } p-6 overflow-y-auto scrollbar-thin scrollbar-thumb-green-600 scrollbar-track-gray-800 transition-all duration-300`}
+            className={`transition-all duration-300 p-6 overflow-y-auto scrollbar-thin scrollbar-thumb-green-600 scrollbar-track-gray-800 ${
+              navigationMode === "terminal" ? (isTerminalExpanded ? "flex-1" : "flex-grow min-w-0") : "w-full"
+            }`}
           >
             {navigationMode === "simple" ? (
               /* Simple Navigation Mode */
@@ -431,9 +431,9 @@ export default function Home() {
           {/* Real Terminal Sidebar - Command Input - only show in terminal mode */}
           {navigationMode === "terminal" && (
             <div
-              className={`${
+              className={`transition-all duration-300 flex flex-col min-h-0 border-l border-gray-600 bg-gray-900 ${
                 isTerminalExpanded ? "w-80" : "w-12"
-              } border-l border-gray-600 bg-gray-900 transition-all duration-300 flex flex-col min-h-0`}
+              }`}
             >
               {/* Terminal Header with Toggle */}
               <div className="flex items-center justify-between bg-gray-800 px-4 py-2 border-b border-gray-600 flex-shrink-0">
@@ -444,7 +444,7 @@ export default function Home() {
                     className={`text-gray-400 hover:${currentTheme.primary} transition-colors p-1`}
                     title={isTerminalExpanded ? "Collapse terminal" : "Expand terminal"}
                   >
-                    {isTerminalExpanded ? <FaChevronRight size={14} /> : <FaChevronLeft size={14} />}
+                    {isTerminalExpanded ? <FaChevronLeft size={14} /> : <FaChevronRight size={14} />}
                   </button>
                 </div>
               </div>
