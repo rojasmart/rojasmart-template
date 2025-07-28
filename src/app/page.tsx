@@ -174,8 +174,8 @@ export default function Home() {
                 <div className="w-[30%] min-w-[160px] flex flex-col justify-between py-8">
                   {/* Navigation Buttons */}
                   <div className="mb-10">
-                    <h1 className={`text-5xl font-bold ${currentTheme.primary} mb-4`}>Hi, I'm Rogério</h1>
-                    <p className={`text-2xl ${currentTheme.text} mb-8`}>Full-stack Developer & Designer specialized in modern web technologies</p>
+                    <h1 className={`text-5xl font-bold ${currentTheme.primary} mb-4`}>Hi, I'm rojasmart</h1>
+                    <p className={`text-2xl ${currentTheme.text} mb-8`}>Developer & Designer specialized in modern web technologies</p>
                     <div className="flex flex-wrap gap-4">
                       <button
                         onClick={() => {
@@ -184,7 +184,7 @@ export default function Home() {
                             "                           WHO AM I?",
                             "===================================================================",
                             "",
-                            "                    Full-stack Developer & Designer",
+                            "                    I am a Multidisciplinary creator.",
                             "                 Specialized in modern web technologies",
                             "                Building user-centered digital products",
                             "",
@@ -202,7 +202,7 @@ export default function Home() {
                       </button>
                       <button
                         onClick={executeProfileCommand}
-                        className={`px-6 py-3 ${currentTheme.border} border ${currentTheme.secondary} hover:bg-gray-800 transition-colors rounded-lg`}
+                        className={`px-6 py-3 ${currentTheme.border} border ${currentTheme.primary} hover:bg-gray-800 transition-colors rounded-lg`}
                       >
                         Skills & Experience
                       </button>
@@ -233,7 +233,7 @@ export default function Home() {
                           ];
                           setTerminalOutput(["$ projects", "", ...projectsContent, ""]);
                         }}
-                        className={`px-6 py-3 ${currentTheme.border} border ${currentTheme.accent} hover:bg-gray-800 transition-colors rounded-lg`}
+                        className={`px-6 py-3 ${currentTheme.border} border ${currentTheme.primary} hover:bg-gray-800 transition-colors rounded-lg`}
                       >
                         Projects
                       </button>
@@ -242,7 +242,7 @@ export default function Home() {
                   {/* Services Grid */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
                     <div className={`${currentTheme.border} border rounded-lg p-8 bg-gray-900 bg-opacity-50`}>
-                      <h3 className={`text-2xl font-bold ${currentTheme.secondary} mb-4`}>Web Development</h3>
+                      <h3 className={`text-2xl font-bold ${currentTheme.secondary} mb-4`}>Technical</h3>
                       <p className={`${currentTheme.text} mb-4`}>
                         Custom websites and web applications built with modern frameworks like React, Next.js, and TypeScript.
                       </p>
@@ -254,7 +254,7 @@ export default function Home() {
                       </ul>
                     </div>
                     <div className={`${currentTheme.border} border rounded-lg p-8 bg-gray-900 bg-opacity-50`}>
-                      <h3 className={`text-2xl font-bold ${currentTheme.secondary} mb-4`}>UI/UX Design</h3>
+                      <h3 className={`text-2xl font-bold ${currentTheme.secondary} mb-4`}>Creative</h3>
                       <p className={`${currentTheme.text} mb-4`}>Beautiful and functional user interfaces that provide excellent user experiences.</p>
                       <ul className={`${currentTheme.text} text-sm space-y-1`}>
                         <li>• User Interface Design</li>
