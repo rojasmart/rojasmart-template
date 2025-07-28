@@ -114,9 +114,6 @@ export default function Home() {
                 {navigationMode === "terminal" ? "⌨️ Terminal" : "🖱️ Simple"}
               </button>
             </div>
-            <Link href="#blog" className={`hover:${currentTheme.primary} transition-colors`}>
-              ./blog
-            </Link>
           </div>
         </div>
 

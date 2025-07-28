@@ -40,9 +40,6 @@ const RealTerminal = ({ theme, fontSize, isVisible, onToggle, onOutputChange }: 
             wsRef.current.onopen = () => {
               console.log("✅ RealTerminal: WebSocket connection established!");
               setIsConnected(true);
-              const initialOutput = ["Terminal connected. Real Node.js environment ready."];
-              setOutput(initialOutput);
-              onOutputChange(initialOutput);
             };
 
             wsRef.current.onmessage = (event) => {
@@ -54,19 +51,13 @@ const RealTerminal = ({ theme, fontSize, isVisible, onToggle, onOutputChange }: 
                 if (type === "clear") {
                   console.log("🧹 RealTerminal: Clearing terminal output");
                   setOutput([]);
-                  onOutputChange([]); // Call separately
                   return;
                 }
 
                 if (type === "output" || type === "error") {
                   const lines = data.split("\n").filter((line: string) => line !== "");
                   console.log("📝 RealTerminal: Adding lines to output:", lines);
-                  setOutput((prev) => {
-                    const newOutput = [...prev, ...lines];
-                    console.log("📝 RealTerminal: Updated output state:", newOutput);
-                    return newOutput;
-                  });
-                  onOutputChange([...output, ...lines]); // Use the current output state
+                  setOutput((prev) => [...prev, ...lines]);
                 }
               } catch (error) {
                 console.error("❌ RealTerminal: Error parsing WebSocket message:", error);
@@ -127,6 +118,21 @@ const RealTerminal = ({ theme, fontSize, isVisible, onToggle, onOutputChange }: 
     }
   }, [isVisible]);
 
+  // Refactor to avoid state updates during render
+  useEffect(() => {
+    if (isConnected) {
+      const initialOutput = ["Terminal connected. Real Node.js environment ready."];
+      setOutput(initialOutput);
+      onOutputChange(initialOutput);
+    }
+  }, [isConnected]);
+
+  useEffect(() => {
+    if (output.length > 0) {
+      onOutputChange(output);
+    }
+  }, [output]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("⌨️ RealTerminal: Form submitted with input:", input);
@@ -139,12 +145,7 @@ const RealTerminal = ({ theme, fontSize, isVisible, onToggle, onOutputChange }: 
     // Add command to output
     const commandOutput = `${currentPath}$ ${input}`;
     console.log("📝 RealTerminal: Adding command to output:", commandOutput);
-    setOutput((prev) => {
-      const newOutput = [...prev, commandOutput];
-      onOutputChange(newOutput);
-      console.log("📝 RealTerminal: Updated output with command:", newOutput);
-      return newOutput;
-    });
+    setOutput((prev) => [...prev, commandOutput]);
 
     // Send command to WebSocket server
     const message = JSON.stringify({
@@ -166,12 +167,7 @@ const RealTerminal = ({ theme, fontSize, isVisible, onToggle, onOutputChange }: 
 
     const commandOutput = `${currentPath}$ ${command}`;
     console.log("📝 RealTerminal: Adding quick command to output:", commandOutput);
-    setOutput((prev) => {
-      const newOutput = [...prev, commandOutput];
-      onOutputChange(newOutput);
-      console.log("📝 RealTerminal: Updated output with quick command:", newOutput);
-      return newOutput;
-    });
+    setOutput((prev) => [...prev, commandOutput]);
 
     const message = JSON.stringify({
       type: "command",
@@ -185,8 +181,6 @@ const RealTerminal = ({ theme, fontSize, isVisible, onToggle, onOutputChange }: 
     console.log("👁️ RealTerminal: Component not visible, returning null");
     return null;
   }
-
-  console.log("🎨 RealTerminal: Rendering component - isConnected:", isConnected, "output length:", output.length);
 
   return (
     <div className="flex flex-col h-full bg-gray-900">
