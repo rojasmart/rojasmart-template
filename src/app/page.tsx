@@ -169,9 +169,9 @@ export default function Home() {
           >
             {navigationMode === "simple" ? (
               /* Simple Navigation Mode - Output right, navigation/services/contact left */
-              <div className="flex flex-row gap-10 w-full min-h-[80vh]">
+              <div className="flex flex-col md:flex-row gap-10 w-full min-h-[80vh] ">
                 {/* Left: Navigation, Services and Contact */}
-                <div className="w-[30%] min-w-[260px] flex flex-col justify-between py-8">
+                <div className="w-[30%] min-w-[160px] flex flex-col justify-between py-8">
                   {/* Navigation Buttons */}
                   <div className="mb-10">
                     <h1 className={`text-5xl font-bold ${currentTheme.primary} mb-4`}>Hi, I'm Rogério</h1>
@@ -240,7 +240,7 @@ export default function Home() {
                     </div>
                   </div>
                   {/* Services Grid */}
-                  <div className="grid md:grid-cols-2 gap-8 mb-12">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
                     <div className={`${currentTheme.border} border rounded-lg p-8 bg-gray-900 bg-opacity-50`}>
                       <h3 className={`text-2xl font-bold ${currentTheme.secondary} mb-4`}>Web Development</h3>
                       <p className={`${currentTheme.text} mb-4`}>
@@ -277,7 +277,7 @@ export default function Home() {
                   </div>
                 </div>
                 {/* Right: Output/Terminal */}
-                <div className="w-[70%] max-w-full flex-shrink-0 py-8">
+                <div className="w-[70%] min-w-[360px] flex-grow flex-shrink-0 py-8">
                   <div className={`${currentTheme.secondary} text-lg font-bold mb-4 flex items-center`}>
                     <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
                     Output
